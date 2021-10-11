@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <Style>
+        *{
+            padding: 0%;
+            margin: 0%;
+        
+        }
+
+        body{
+            background-color: black;
+        }
+        .bu{
+            text-transform: uppercase;
+            width: 90px;
+            height: 25px;
+            background-color: whitesmoke;
+            border: 1px solid black;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .bu:hover{
+            transition: all 0.5s;
+            background-color: black;
+            color: white;
+        }
+        .so{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0%;
+            border: 0px solid black;
+            background-color: black;
+            color: rgba(255, 255, 255, 0.849);
+            display: none;
+        }
+        .meX{
+            position: absolute;
+            width: 100%;
+            height: 30%; 
+        }
+        .ex{
+            float: right;
+            color:red;
+            cursor: pointer;
+        }
+        #campo{
+            position: absolute;
+            border: 0px solid black;
+            width: 60%;
+            height: 80%;
+            left: 20%;
+            top: 10%;
+            background-color: rgba(255, 255, 255, 0.37);
+            box-shadow: black 4px 4px 2px;
+        }
+
+        /*Menu*/
+        #campo #menu{
+            position: absolute;
+            border: 0px solid black;
+            width: 100%;
+            height: 6%;
+            background-color: rgba(0, 0, 255, 0.514);
+        }
+        #campo #menu .menu-tags{
+            display: inline-block;
+            position: absolute;
+            top: 3%;
+            border: 0px solid black;
+            width: 20%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        #campo #menu .menu-tags:hover{
+            background-color: white;
+            color: blue;
+            transition: 2s;
+        }
+        #campo #menu #pontu{
+            right: 0%;
+        }
+
+        #campo #menu #sobre{
+            left: 50%;
+        }
+        /*butoes*/
+        #butoes{
+            position: absolute;
+            top: 50%;
+            left: 0%;
+            height: 50%;
+            width: 100%;
+            
+        }
+
+
+
+
+        /*Resultado*/
+
+        #campo #res{
+            position: absolute;
+            top: 40%;
+            left: 40%;
+        }
+
+        /*lbn*/
+        #campo #texto{
+            position: absolute;
+            right: 0%;
+            top: 10%;
+            display: none;
+        }
+
+        #campo #texto2{
+            position: absolute;
+            left: 0%;
+            top: 10%;
+            display: none;
+        }
+        .btn{
+            height: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .inse{
+            display: flex;
+            justify-content: center;
+            height: 70px;
+            align-items: center;
+        }
+
+        @media screen and (max-width:800px) {
+            #campo{
+                position: absolute;
+                border: 0px solid black;
+                width: 100%;
+                height: 100%;
+                left: 0%;
+                top: 0%;
+                background-color: rgba(245, 245, 245, 0.466);
+            }
+
+            #campo #texto{
+                position: absolute;
+                left: 0%;
+                top: 10%;
+                display: none;
+            }
+            
+            #campo #texto2{
+                position: absolute;
+                left: 0%;
+                top: 20%;
+                display: none;
+            }
+            .so{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0%;
+                border: 0px solid black;
+                background-color: black;
+                color: rgba(255, 255, 255, 0.849);
+                display: none;
+            }
+        
+            
+        }
+    </Style>
+    <title>pedra-papel-tesoura</title>
+</head>
+<body>
+   
+   
+    <div id="campo">
+        <div id="menu">
+            <div id="nivel" class="menu-tags" style="display:none;">Níveis</div>
+            <div id="sobre" class="menu-tags">Sobre</div>
+            <div id="pontu" class="menu-tags" style="display:none;">pontuação</div>
+        </div>
+        
+        <div id="res">Resultado</div>
+        
+        <input type="text" id="texto" placeholder="Valor adicionado">
+        <input type="text" id="texto2" placeholder="Valor adicionado">
+        <div id="butoes">
+            <div class="btn">
+                <input type="button" value="Pedra" id="pedra" class="butoes bu">
+                <input type="button" value="Papel" id="papel" class="butoes bu">
+                <input type="button" value="Tesoura" id="tesoura" class="butoes bu">
+            </div>
+            <div class="inse">
+                <input type="button" value="Inserir" id="inserir" class="bu">
+            </div>
+        </div>
+        <div class="so">
+            <div class="meX">
+                <abbr title="Sair"><div class="ex">X</div></abbr>
+            </div>
+            <p>Nome: pedra papel e tesoura<br>Desenvolvedor: Martinho Domingos</p>
+            <p>Como jogar?<br>R/:Click em uma das opções pedra papel ou tesoura e depois click em inserir.<br>Regras:<br>Pedra ganha da tesoura, tesoura ganha do papel e o papel ganha da pedra</p>
+        </div>
+    </div>
+    <script>
+        //butoes
+        let btn_pedra = window.document.getElementById("pedra").addEventListener("click",clicar_pedra)
+        let btn_papel = window.document.getElementById("papel").addEventListener("click",clicar_papel)
+        let btn_tesoura = window.document.getElementById("tesoura").addEventListener("click",clicar_tesoura)
+        let btn_inserir = window.document.getElementById("inserir").addEventListener("click",clicar_inserir)
+        //lbn
+        let lbn_texto = window.document.getElementById("texto")
+        let lbn_texto_cpu = window.document.getElementById("texto2")
+        //cpu
+        lista = ["pedra", "papel", "tesoura"]
+        let rand
+        //resultado
+        let res = window.document.getElementById("res")
+        //variaveis 
+        lista2 = ["pedra", "papel", "tesoura"]
+        let t = -1
+        //eventos secunadario
+        function clicar_pedra(){
+            lbn_texto.value = "Jogador escolheu pedra"
+            rand = Math.round(Math.random()*2)
+            lbn_texto_cpu.value =`CPU escolheu ${lista[rand]}`
+            lbn_texto.style.display = "none"
+            lbn_texto_cpu.style.display = "none"
+            t = 0
+        }
+
+        function clicar_papel(){
+            lbn_texto.value = "Jogador escolheu papel"
+            rand = Math.round(Math.random()*2)
+            lbn_texto_cpu.value =`CPU escolheu ${lista[rand]}`
+            lbn_texto.style.display = "none"
+            lbn_texto_cpu.style.display = "none"
+            t = 1
+        }
+
+        function clicar_tesoura(){
+            lbn_texto.value = "Jogador escolheu tesoura"
+            rand = Math.round(Math.random()*2)
+            lbn_texto_cpu.value =`CPU escolheu ${lista[rand]}`
+            lbn_texto.style.display = "none"
+            lbn_texto_cpu.style.display = "none"
+            t = 2
+        }
+        //evento pricipal
+        function clicar_inserir() {
+            lbn_texto.style.display = "block"
+            lbn_texto_cpu.style.display = "block"
+            if(lista2[t] == lista[rand]){
+                res.innerText = "EMPATE"
+                res.style.color = "black"
+            }else if(lista2[t] == "papel" && lista[rand] == "pedra"){
+                res.innerText = "VOCÉ VENCEU"
+                res.style.color = "aqua"
+            }else if(lista2[t] == "pedra" && lista[rand] == "papel"){
+                res.innerText = "CPU VENCEU"
+                res.style.color = "red"
+            }else if(lista2[t] == "tesoura" && lista[rand] == "pedra"){
+                res.innerText = "CPU VENCEU"
+                res.style.color = "red"
+            }else if(lista2[t] == "pedra" && lista[rand] == "tesoura"){
+                res.innerText = "VOCÉ VENCEU"
+                res.style.color = "aqua"
+            }else if(lista2[t] == "papel" && lista[rand] == "tesoura"){
+                res.innerText = "CPU VENCEU"
+                res.style.color = "red"
+            }else if(lista2[t] == "tesoura" && lista[rand] == "papel"){
+                res.innerText = "VOCÉ VENCEU"
+                res.style.color = "aqua"
+            }
+        }
+
+        let ex = window.document.querySelectorAll(".ex")
+        let so = window.document.querySelectorAll(".so")
+        ex[0].addEventListener("click",clicar_ex)
+        function clicar_ex(){
+            so[0].style.display = "none"
+        }
+        let sobre = window.document.querySelectorAll("#sobre")
+        sobre[0].addEventListener("click",clicar_sobre)
+        function clicar_sobre(){
+            so[0].style.display = "block"
+        }
+
+    </script>
+</body>
+</html>
